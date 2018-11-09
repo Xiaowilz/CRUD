@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function(){
+	return view('layouts/index');
 });
+
+Route::group(['prefix' => 'Mahasiswa'], function(){
+	Route::get('/Form/Baru', 'MahasiswaController@index');
+	Route::post('/Simpan/Baru', 'MahasiswaController@store');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -18,6 +18,10 @@ Route::get('/', function(){
 Route::group(['prefix' => 'Mahasiswa'], function(){
 	Route::get('/Form/Baru', 'MahasiswaController@index');
 	Route::post('/Simpan/Baru', 'MahasiswaController@store');
+	Route::get('/Table', 'MahasiswaController@tabel');
+	Route::get('/Form/Ubah/{id}', 'MahasiswaController@edit');
+	Route::post('/Simpan/Ubah/{id}', 'MahasiswaController@update');
+	Route::get('/Hapus/{id}', 'MahasiswaController@destroy');
 });
 
 Auth::routes();

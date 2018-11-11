@@ -11,7 +11,11 @@ class mMahasiswa extends Model
 
     protected $table = 'm_mahasiswas';
 
-    protected $primary = 'mhId';
+    protected $primaryKey = 'mhId';
+
+    protected $guarded = 'mhId';
+
+    protected $fillable = array('mhNama', 'mhAlamat', 'mhJk');
 
     protected $dates =['deleted_at'];
 }

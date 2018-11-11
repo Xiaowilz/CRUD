@@ -27,6 +27,16 @@ class MahasiswaController extends Controller
         //
     }
 
+    public function dMahasiswa(){
+        $dMahasiswa = mMahasiswa::all();
+        return $dMahasiswa;
+    }
+
+    public function tabel(){
+        $mahasiswa = $this->dMahasiswa();
+        return view('Mahasiswa/TabMahasiswa', compact('mahasiswa'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,12 +48,14 @@ class MahasiswaController extends Controller
 
         $mahasiswa = new mMahasiswa();
 
-        var_dump($request->nim);
         $mahasiswa->mhId = $request->nim;
         $mahasiswa->mhNama = $request->namaMahasiswa;
         $mahasiswa->mhAlamat = $request->alamatMahasiswa;
         $mahasiswa->mhJk = $request->jk;
         $mahasiswa->save();
+
+        return redirect()->back()->with('status', 'Berhasil Tersimpan');
+
     }
 
     /**
@@ -54,7 +66,7 @@ class MahasiswaController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -65,7 +77,9 @@ class MahasiswaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mahasiswa = mMahasiswa::where('mhId', $id)->first();
+        // return $mahasiswa;
+        return view('Mahasiswa/FormUbahMahasiswa', compact('mahasiswa'));
     }
 
     /**
@@ -77,7 +91,17 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request;
+        $updateMahasiswa = mMahasiswa::where('mhId', $id)->first();
+
+        $updateMahasiswa->mhNama = $request->namaMahasiswa;
+        $updateMahasiswa->mhAlamat = $request->alamatMahasiswa;
+        $updateMahasiswa->mhJk = $request->jk;
+
+        $updateMahasiswa->save();
+
+        $mahasiswa = $this->dMahasiswa();
+        return view('Mahasiswa/TabMahasiswa', compact('mahasiswa'));
     }
 
     /**
@@ -88,6 +112,12 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteMahasiswa = mMahasiswa::find($id);
+
+        $deleteMahasiswa->delete();
+
+        $mahasiswa = $this->dMahasiswa();
+
+        return view('Mahasiswa/TabMahasiswa', compact('mahasiswa'));
     }
 }
